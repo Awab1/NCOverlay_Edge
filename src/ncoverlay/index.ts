@@ -121,7 +121,7 @@ export class NCOverlay {
 
         for (const detail of newDetails) {
           if (
-            detail.type !== 'jikkyo' ||
+            (detail.type !== 'jikkyo' && detail.type !== 'liveedge') ||
             (adjustJikkyoOffset && detail.chapters.length)
           ) {
             continue

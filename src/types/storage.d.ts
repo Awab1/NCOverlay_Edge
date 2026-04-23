@@ -198,6 +198,12 @@ export interface SettingItems {
    */
   'settings:autoSearch:manual': boolean
 
+  /**
+   * 自動検索:LiveEdge: 有効
+   * @default false
+   */
+  'settings:autoSearch:liveedgeEnabled': boolean
+
   // NG設定 //////////////////////////////////////////////////
   /**
    * NG設定:コメント

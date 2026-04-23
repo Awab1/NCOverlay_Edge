@@ -32,6 +32,7 @@ const COMMENT_WRAPPER_TYPE_CLASSES: Record<StateSlotDetail['type'], CnReturn> =
     jikkyo: cn('before:bg-jikkyo-600 dark:before:bg-jikkyo-700'),
     nicolog: cn('before:bg-blue-500 dark:before:bg-blue-600'),
     file: cn('before:bg-blue-500 dark:before:bg-blue-600'),
+    liveedge: cn('before:bg-orange-500 dark:before:bg-orange-600'),
   }
 
 const COMMENT_CELL_COMMAND_CLASSES: Record<string, CnReturn> = {

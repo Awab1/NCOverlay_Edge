@@ -90,6 +90,31 @@ export function Thumbnail({
         </div>
       </div>
     )
+  } else if (type === 'liveedge') {
+    thumbnail = (
+      <div className="h-full rounded-lg bg-content3 p-px">
+        <div
+          className={cn(
+            'relative',
+            'flex flex-col items-center justify-center',
+            'aspect-video h-full overflow-hidden rounded-lg',
+            'px-1',
+            'bg-orange-500 dark:bg-orange-600',
+            'select-none'
+          )}
+        >
+          <span
+            className={cn(
+              'line-clamp-1',
+              'font-bold text-white',
+              isSearch ? 'text-mini' : 'text-small'
+            )}
+          >
+            LiveEdge
+          </span>
+        </div>
+      </div>
+    )
   } else if ('thumbnail' in info) {
     thumbnail = (
       <Image

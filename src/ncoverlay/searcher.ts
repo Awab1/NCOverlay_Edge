@@ -32,6 +32,9 @@ import {
   programToSlotDetail,
 } from '@/utils/api/syobocal/programToSlotDetail'
 import { ncoSearchProxy } from '@/proxy/nco-utils/search/extension'
+import { getLiveEdgeKakolog } from '@/utils/api/liveedge/getLiveEdgeKakolog'
+import { liveEdgeToSlotDetail } from '@/utils/api/liveedge/liveEdgeSlotDetail'
+import { JIKKYO_TO_LIVEEDGE_MAP } from '@/utils/api/liveedge/constants'
 
 export interface NCOSearcherAutoSearchArgs {
   /** 動画タイトル or 解析結果 */
@@ -121,6 +124,7 @@ export class NCOSearcher {
       szbh: new Map(),
       jikkyo: new Map(),
       nicolog: new Map(),
+      liveedge: new Map(),
     }
 
     // ニコニコ動画
@@ -268,6 +272,54 @@ export class NCOSearcher {
     logger.log('commentsJikkyo', commentsJikkyo)
     logger.log('commentsNicolog', commentsNicolog)
 
+    // --- LiveEdge 過去ログ 検索 & 取得 ---
+    if (targets.includes('liveedge') && commentsJikkyo.length) {
+      for (const cmt of commentsJikkyo) {
+        if (!cmt || cmt.thread.commentCount === 0) continue
+        
+        const parts = cmt.thread.id.split(':')
+        const jkChId = parts[0]
+        const timeRangeStr = parts[1]
+        
+        if (!jkChId || !timeRangeStr || !JIKKYO_TO_LIVEEDGE_MAP[jkChId]) continue
+        
+        const timeRangeParts = timeRangeStr.split('-')
+        if (timeRangeParts.length !== 2) continue
+        
+        const starttime = Number(timeRangeParts[0])
+        const endtime = Number(timeRangeParts[1])
+        const slotId = `liveedge:${jkChId}:${starttime}-${endtime}`
+        
+        if (loadedIds.includes(slotId)) continue
+        
+        const slotDetail = liveEdgeToSlotDetail(
+          '...',
+          jkChId,
+          starttime,
+          endtime,
+          { status: 'loading', isAutoLoaded }
+        )
+        loadingSlotDetails.liveedge.set(slotDetail.id, slotDetail)
+      }
+      
+      const liveedgeDetailsArray = [...loadingSlotDetails.liveedge.values()]
+      if (liveedgeDetailsArray.length > 0) {
+        await this.#state.add('slotDetails', ...liveedgeDetailsArray)
+        loadingSlotDetailsArray.push(...liveedgeDetailsArray)
+      }
+    }
+
+    const commentsLiveEdge = await Promise.all(
+      [...loadingSlotDetails.liveedge.values()].map((detail) => {
+        const parts = detail.id.replace('liveedge:', '').split(':')
+        const jkChId = parts[0]
+        const [starttime, endtime] = parts[1].split('-').map(Number)
+        return getLiveEdgeKakolog(this.#state, { jkChId, starttime, endtime })
+      })
+    )
+
+    logger.log('commentsLiveEdge', commentsLiveEdge)
+
     const loadedSlotMap = new Map<string, StateSlot>()
     const updateSlotDetailMap = new Map<string, StateSlotDetailUpdate>()
 
@@ -407,6 +459,44 @@ export class NCOSearcher {
         },
         markers,
         chapters,
+      })
+    }
+
+    // LiveEdge
+    for (const cmt of commentsLiveEdge) {
+      if (!cmt) continue
+      
+      const { thread, markers, chapters, kawaiiCount, threadUrl, threadTitle } = cmt
+      const id = thread.id
+      
+      // 対応するニコニコ実況スロットのオフセット(markers/chapters)を流用する
+      // LiveEdge ID: "liveedge:jk1:start-end" → jikkyo thread ID: "jk1:start-end"
+      const jikkyoThreadId = id.replace('liveedge:', '')
+      const matchingJikkyo = commentsJikkyo.find(
+        (j) => j && j.thread.id === jikkyoThreadId
+      )
+      const effectiveMarkers = matchingJikkyo ? matchingJikkyo.markers : markers
+      const effectiveChapters = matchingJikkyo ? matchingJikkyo.chapters : chapters
+      
+      loadedSlotMap.set(id, {
+        id,
+        threads: [thread],
+        isAutoLoaded,
+      })
+      
+      updateSlotDetailMap.set(id, {
+        id,
+        status: 'ready',
+        info: {
+          title: threadTitle || thread.id,
+          count: {
+            comment: thread.commentCount,
+            kawaii: kawaiiCount,
+          },
+          threadUrl,
+        },
+        markers: effectiveMarkers,
+        chapters: effectiveChapters,
       })
     }
 

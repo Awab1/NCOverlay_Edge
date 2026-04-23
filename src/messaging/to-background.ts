@@ -21,6 +21,12 @@ export interface ProtocolMap {
   }) => void
 
   timeupdate: (args: { id: number; time: number }) => void
+
+  /** バックグラウンドでfetchを実行するプロキシ */
+  fetchProxy: (args: {
+    url: string
+    responseType: 'text' | 'shift_jis'
+  }) => { ok: boolean; status: number; data: string | null }
 }
 
 export const {

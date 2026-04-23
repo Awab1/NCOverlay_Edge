@@ -128,9 +128,9 @@ export const SETTINGS_INIT_DATA: SettingsInitData = [
         settingsKey: 'settings:comment:speed',
         inputType: 'range',
         label: '速度',
-        min: 0.25,
+        min: 0.1,
         max: 2,
-        step: 0.25,
+        step: 0.1,
         prefix: 'x',
       },
       {

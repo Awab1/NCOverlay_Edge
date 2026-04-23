@@ -160,11 +160,30 @@ export interface StateSlotDetailFile extends StateSlotDetailBase {
   }
 }
 
+export interface StateSlotDetailLiveEdge extends StateSlotDetailBase {
+  type: 'liveedge'
+  info: {
+    id: string
+    source: 'liveedge'
+    title: string
+    duration: number
+    date: [start: number, end: number]
+    count: {
+      comment: number
+      kawaii?: number
+    }
+    threadUrl?: string
+  }
+  markers: JikkyoMarker[]
+  chapters: JikkyoChapter[]
+}
+
 export type StateSlotDetail =
   | StateSlotDetailDefault
   | StateSlotDetailJikkyo
   | StateSlotDetailNicolog
   | StateSlotDetailFile
+  | StateSlotDetailLiveEdge
 
 export type StateSlotDetailUpdate = DeepPartial<StateSlotDetail> &
   Required<Pick<StateSlotDetail, 'id'>>
@@ -253,7 +272,7 @@ export async function filterDisplayThreads(
       id.startsWith('jk103:')
 
     // 実況: オフセット自動調節
-    if (type === 'jikkyo' && !isNHK) {
+    if ((type === 'jikkyo' || type === 'liveedge') && !isNHK) {
       if (adjustJikkyoOffset) {
         if (detail.chapters.length) {
           slot.threads = filterThreadsByJikkyoChapters(
@@ -327,7 +346,8 @@ export async function filterDisplayThreads(
         hideAssistedComments &&
         type !== 'jikkyo' &&
         type !== 'nicolog' &&
-        type !== 'file'
+        type !== 'file' &&
+        type !== 'liveedge'
           ? findAssistedCommentIds(thread.comments)
           : null
 

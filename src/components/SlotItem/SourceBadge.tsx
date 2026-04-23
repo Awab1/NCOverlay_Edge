@@ -21,6 +21,7 @@ const SOURCE_BADGE_CLASSES: {
   jikkyo: cn('bg-jikkyo-600 text-white dark:bg-jikkyo-700'),
   nicolog: cn('bg-blue-500 text-white dark:bg-blue-600'),
   file: cn('bg-blue-500 text-white dark:bg-blue-600'),
+  liveedge: cn('bg-orange-500 text-white dark:bg-orange-600'),
 }
 
 export function SourceBadge({ className, type }: SourceTagProps) {

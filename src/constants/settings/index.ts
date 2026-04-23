@@ -14,6 +14,7 @@ export const SOURCE_NAMES: Record<StateSlotDetail['type'], string> = {
   jikkyo: '実況',
   nicolog: '生放送',
   file: 'ファイル',
+  liveedge: 'LiveEdge',
 }
 
 export const COMMENT_CUSTOMIZE_TARGET_KEYS: CommentCustomizeTarget[] = [
@@ -24,6 +25,7 @@ export const COMMENT_CUSTOMIZE_TARGET_KEYS: CommentCustomizeTarget[] = [
   'jikkyo',
   'nicolog',
   'file',
+  'liveedge',
 ]
 
 export const AUTO_SEARCH_TARGET_KEYS: AutoSearchTarget[] = [
@@ -33,6 +35,7 @@ export const AUTO_SEARCH_TARGET_KEYS: AutoSearchTarget[] = [
   'szbh',
   'jikkyo',
   'nicolog',
+  'liveedge',
 ]
 
 export const SLOTS_REFRESH_SETTINGS_KEYS: SettingsKey[] = [

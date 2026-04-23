@@ -30,4 +30,31 @@ export default function () {
       ...data.createData,
     })
   })
+
+  onMessageInBackground('fetchProxy', async ({ data }) => {
+    try {
+      const res = await fetch(data.url)
+      
+      if (!res.ok) {
+        return { ok: false, status: res.status, data: null }
+      }
+      
+      if (data.responseType === 'shift_jis') {
+        const buf = await res.arrayBuffer()
+        let decoder: TextDecoder
+        try {
+          decoder = new TextDecoder('shift_jis', { fatal: false })
+        } catch (e) {
+          decoder = new TextDecoder('utf-8')
+        }
+        const text = decoder.decode(buf)
+        return { ok: true, status: res.status, data: text }
+      } else {
+        const text = await res.text()
+        return { ok: true, status: res.status, data: text }
+      }
+    } catch (e) {
+      return { ok: false, status: 0, data: null }
+    }
+  })
 }

@@ -21,6 +21,7 @@ const BASE_URLS: Record<NonNullable<TitleProps['source']>, string> = {
   nhk_timetable: 'https://www.nhk.jp/timetable/130/tv/',
   nhk_chronicle: 'https://www.nhk.or.jp/archives/chronicle/detail/?crnid=',
   nicolog: 'https://nicolog.ecchi.club/nico-live-anime/',
+  liveedge: 'https://bbs.eddibb.cc/liveedge/',
 }
 
 export function Title({ id, source, title, isSearch }: TitleProps) {
