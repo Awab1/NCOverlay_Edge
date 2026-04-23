@@ -1,14 +1,7 @@
 # <sub><img src="assets/icon.png" width="30px" height="30px"></sub> NCOverlay
-[![GitHub Release](https://img.shields.io/github/v/release/Midra429/NCOverlay?label=Releases)](https://github.com/Midra429/NCOverlay/releases/latest)
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ofhffkmglkibpkgcfhbgajghlkgplafe?label=Chrome%20Web%20Store)](https://chromewebstore.google.com/detail/ofhffkmglkibpkgcfhbgajghlkgplafe)
-[![Firefox Add-ons](https://img.shields.io/amo/v/ncoverlay?label=Firefox%20Add-ons)](https://addons.mozilla.org/ja/firefox/addon/ncoverlay/)
-
-[<img src="assets/badges/chrome.png" height="60px">](https://chromewebstore.google.com/detail/ofhffkmglkibpkgcfhbgajghlkgplafe)
-[<img src="assets/badges/edge.png" height="60px">](https://microsoftedge.microsoft.com/addons/detail/pglfdhpihampbbmllndglcejpnjgkkkl)
-[<img src="assets/badges/firefox.png" height="60px">](https://addons.mozilla.org/ja/firefox/addon/ncoverlay/)
 
 ## 概要
-動画配信サービスの再生画面にニコニコのコメントを表示する拡張機能です。
+NCOverlayに[エッヂ掲示板](https://bbs.eddibb.cc/liveedge/)の過去ログ取得機能を追加したものです。
 
 ## 対応している動画配信サービス
 - [dアニメストア](https://animestore.docomo.ne.jp/animestore/)
@@ -27,35 +20,6 @@
 - [TVer](https://tver.jp/)
 
 ※ 増減する可能性あり
-
-## 拡張機能をインストール
-### Google Chrome (v116以降)
-- Chrome ウェブストア\
-https://chromewebstore.google.com/detail/ofhffkmglkibpkgcfhbgajghlkgplafe
-
-### Microsoft Edge (v116以降)
-- Chrome ウェブストア\
-https://chromewebstore.google.com/detail/ofhffkmglkibpkgcfhbgajghlkgplafe
-
-- Microsoft Edge アドオン\
-https://microsoftedge.microsoft.com/addons/detail/pglfdhpihampbbmllndglcejpnjgkkkl
-
-### Firefox (v142以降)
-- Firefox アドオン\
-https://addons.mozilla.org/ja/firefox/addon/ncoverlay/
-
-### Chromium
-上記のブラウザ以外のChromiumベースのブラウザでも基本的には動作しますが、\
-サイドパネル（コメントリスト）の表示ができない可能性があります。
-
-## 不具合報告・機能提案など
-- [Google フォーム](https://docs.google.com/forms/d/e/1FAIpQLSerDl7pYEmaXv0_bBMDOT2DfJllzP1kdesDIRaDBM8sOAzHGw/viewform)<br>
-(NCOverlay経由でアクセスすると、バージョンやOSなどの情報が自動入力されます)
-- GitHubの[Issues](https://github.com/Midra429/NCOverlay/issues)
-- SNSアカウント宛にメッセージやメンション
-  - X (Twitter): [@Midra429](https://x.com/Midra429)
-
----
 
 ## 開発
 ### 環境
