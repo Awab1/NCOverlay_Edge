@@ -39,6 +39,7 @@ export interface NCOStateItems {
   [key: `state:${number}:offset`]: StateOffset | null
   [key: `state:${number}:slots`]: StateSlot[] | null
   [key: `state:${number}:slotDetails`]: StateSlotDetail[] | null
+  [key: `state:${number}:playingVideo`]: StatePlayingVideo | null
 }
 
 export type NCOStateItemKey =
@@ -187,6 +188,12 @@ export type StateSlotDetail =
 
 export type StateSlotDetailUpdate = DeepPartial<StateSlotDetail> &
   Required<Pick<StateSlotDetail, 'id'>>
+
+export interface StatePlayingVideo {
+  type: string
+  name: string
+  size: number
+}
 
 export interface NcoV1Comment extends V1Comment {
   _raw: {
@@ -606,6 +613,7 @@ export class NCOState {
       this.remove('offset'),
       this.remove('slots'),
       this.remove('slotDetails'),
+      this.remove('playingVideo'),
     ])
   }
 
